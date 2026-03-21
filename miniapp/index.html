@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KursaWork Mini App</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <h1>KursaWork</h1>
+      <p class="subtitle">Сопровождение учебных работ и проектов</p>
+
+      <section class="card">
+        <h2>Категории и цены</h2>
+        <button class="item" data-type="Индивидуальный проект" data-price="от 3 500 ₽">
+          <span>Индивидуальный проект</span>
+          <strong>от 3 500 ₽</strong>
+        </button>
+        <button class="item" data-type="Курсовой проект" data-price="от 2 500 ₽">
+          <span>Курсовой проект</span>
+          <strong>от 2 500 ₽</strong>
+        </button>
+        <button class="item" data-type="Реферат" data-price="от 900 ₽">
+          <span>Реферат</span>
+          <strong>от 900 ₽</strong>
+        </button>
+      </section>
+
+      <section class="card">
+        <h2>Описание задачи</h2>
+        <textarea id="task" placeholder="Кратко опишите тему, объем и дедлайн"></textarea>
+        <button id="sendBtn" class="primary">Отправить в бот</button>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+  </html>
