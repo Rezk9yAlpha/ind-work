@@ -31,6 +31,13 @@
       <section class="card">
         <h2>✍️ Описание задачи</h2>
         <textarea id="task" placeholder="Напишите тему, объем и желаемый дедлайн..."></textarea>
+        
+        <div class="file-upload">
+          <input type="file" id="fileInput" multiple hidden />
+          <button id="fileBtn" class="secondary">📎 Прикрепить файлы</button>
+          <div id="fileList" class="file-list"></div>
+        </div>
+
         <button id="sendBtn" class="primary">Отправить заявку 🚀</button>
       </section>
     </main>

@@ -122,6 +122,36 @@ textarea:focus {
   border-color: var(--accent-color);
 }
 
+.file-upload {
+  margin: 15px 0;
+}
+
+.secondary {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  color: var(--text-secondary);
+  border-radius: 12px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.secondary:hover {
+  border-color: var(--accent-color);
+  color: var(--text-primary);
+}
+
+.file-list {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--accent-color);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .primary {
   margin-top: 10px;
   width: 100%;
