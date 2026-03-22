@@ -4,40 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>KursaWork Mini App</title>
-    <link rel="stylesheet" href="./style.css?v=1.1" />
+    <link rel="stylesheet" href="./style.css?v=2.0" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
     <main class="container">
-      <h1>KursaWork ✨</h1>
+      <h1>KursaWork 🔥</h1>
       <p class="subtitle">Сопровождение учебных работ и проектов 🎓</p>
 
       <section class="card">
-        <h2>📂 Категории и цены</h2>
-        <button class="item" data-type="Индивидуальный проект" data-price="от 3 500 ₽">
+        <h2>📂 Услуги и прайс</h2>
+        <button class="item" data-type="Индивидуальный проект" data-price="от 2 000 ₽">
           <span>💎 Индивидуальный проект</span>
+          <strong>от 2 000 ₽</strong>
+        </button>
+        <button class="item" data-type="Курсовой проект" data-price="от 3 500 ₽">
+          <span>📝 Курсовой проект</span>
           <strong>от 3 500 ₽</strong>
         </button>
-        <button class="item" data-type="Курсовой проект" data-price="от 2 500 ₽">
-          <span>📝 Курсовой проект</span>
+        <button class="item" data-type="Отчет по практике" data-price="от 2 500 ₽">
+          <span>📈 Отчет по практике</span>
           <strong>от 2 500 ₽</strong>
         </button>
-        <button class="item" data-type="Реферат" data-price="от 900 ₽">
+        <button class="item" data-type="Реферат" data-price="от 1 000 ₽">
           <span>📄 Реферат</span>
-          <strong>от 900 ₽</strong>
+          <strong>от 1 000 ₽</strong>
         </button>
       </section>
 
       <section class="card">
-        <h2>✍️ Описание задачи</h2>
-        <textarea id="task" placeholder="Напишите тему, объем и желаемый дедлайн..."></textarea>
+        <h2>✍️ Оформить заказ</h2>
+        <textarea id="task" placeholder="Тема работы, объем, пожелания..."></textarea>
         
+        <div class="input-group">
+          <label for="deadline">📅 Срок сдачи (дедлайн):</label>
+          <input type="date" id="deadline" />
+        </div>
+
         <div class="file-upload">
           <input type="file" id="fileInput" multiple hidden />
           <button id="fileBtn" class="secondary">📎 Прикрепить файлы</button>
           <div id="fileList" class="file-list"></div>
-          <p style="font-size: 11px; color: var(--accent-color); margin-top: 8px; font-weight: 500;">
-            ⚠️ Важно: Telegram Mini App не передает сами файлы. Пожалуйста, после оформления заявки перешлите файлы напрямую менеджеру <a href="https://t.me/R0llxon" style="color: #38bdf8; text-decoration: underline;">@R0llxon</a> 📎
+          <p style="font-size: 11px; color: var(--accent-color); margin-top: 10px; font-weight: 500; line-height: 1.4;">
+            ⚠️ <b>ВНИМАНИЕ:</b> После отправки заявки обязательно перешлите файлы менеджерам: <br>
+            👉 <a href="https://t.me/R0llxon" style="color: #38bdf8; text-decoration: underline;">@R0llxon</a> <br>
+            👉 <a href="https://t.me/filarmontg" style="color: #38bdf8; text-decoration: underline;">@filarmontg</a>
           </p>
         </div>
 
@@ -45,6 +56,6 @@
       </section>
     </main>
 
-    <script src="./app.js?v=1.1"></script>
+    <script src="./app.js?v=2.0"></script>
   </body>
 </html>

@@ -49,6 +49,7 @@ fileInput.addEventListener("change", (e) => {
 
 document.getElementById("sendBtn").addEventListener("click", () => {
   const task = document.getElementById("task").value.trim();
+  const deadline = document.getElementById("deadline").value;
   
   if (!task) {
     if (tg.HapticFeedback) {
@@ -58,10 +59,19 @@ document.getElementById("sendBtn").addEventListener("click", () => {
     return;
   }
 
+  if (!deadline) {
+    if (tg.HapticFeedback) {
+      tg.HapticFeedback.notificationOccurred("error");
+    }
+    tg.showAlert("Пожалуйста, укажите желаемый дедлайн 📅");
+    return;
+  }
+
   const payload = {
     type: selectedType,
     price: selectedPrice,
     task,
+    deadline,
     files: attachedFiles // Передаем только имена файлов (для уведомления)
   };
 
