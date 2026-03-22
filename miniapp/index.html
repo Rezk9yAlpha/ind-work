@@ -4,13 +4,71 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>KursaWork Mini App</title>
-    <link rel="stylesheet" href="./style.css?v=2.0" />
+    <link rel="stylesheet" href="./style.css?v=2.2" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
     <main class="container">
       <h1>KursaWork 🔥</h1>
       <p class="subtitle">Сопровождение учебных работ и проектов 🎓</p>
+
+      <section class="card">
+        <h2>💎 Наши преимущества</h2>
+        <div class="benefits-grid">
+          <div class="benefit-item">
+            <span>🛡️</span>
+            <strong>100% уникальность</strong>
+          </div>
+          <div class="benefit-item">
+            <span>🛠️</span>
+            <strong>Бесплатные правки</strong>
+          </div>
+          <div class="benefit-item">
+            <span>🎓</span>
+            <strong>До защиты</strong>
+          </div>
+          <div class="benefit-item">
+            <span>⚡</span>
+            <strong>Сжатые сроки</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>❓ Частые вопросы (FAQ)</h2>
+        <div class="faq-list">
+          <details>
+            <summary>А если преподаватель не примет?</summary>
+            <p>Мы бесплатно вносим все необходимые правки до тех пор, пока работа не будет успешно принята!</p>
+          </details>
+          <details>
+            <summary>Как быстро вы делаете?</summary>
+            <p>Сроки зависят от сложности, но мы всегда стараемся уложиться в ваш дедлайн. В среднем от 2-х дней.</p>
+          </details>
+          <details>
+            <summary>Можно ли вернуть деньги?</summary>
+            <p>Да, если мы не сможем выполнить работу в срок или она не будет соответствовать вашим требованиям.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>💳 Как происходит оплата?</h2>
+        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+          <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+            <span>1️⃣</span>
+            <span><b>Предоплата 50%:</b> Вы вносите половину стоимости после обсуждения деталей.</span>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+            <span>2️⃣</span>
+            <span><b>Контроль:</b> Мы делаем часть работы и присылаем вам скриншоты/видео.</span>
+          </div>
+          <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <span>3️⃣</span>
+            <span><b>Финал:</b> Оплачиваете остаток и получаете полностью готовую работу!</span>
+          </div>
+        </div>
+      </section>
 
       <section class="card">
         <h2>📂 Услуги и прайс</h2>
@@ -39,6 +97,13 @@
         <div class="input-group">
           <label for="deadline">📅 Срок сдачи (дедлайн):</label>
           <input type="date" id="deadline" />
+        </div>
+
+        <div class="input-group">
+          <label for="promo">🎁 Бонусы и скидки:</label>
+          <input type="text" id="promo" placeholder="Промокод (если есть)" />
+          <p class="promo-hint">✨ Скидка 10% на ПЕРВЫЙ заказ (автоматически)</p>
+          <p class="promo-hint">📢 Расскажите друзьям о боте и получите скидку 15% на следующий заказ!</p>
         </div>
 
         <div class="file-upload">

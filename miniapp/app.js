@@ -50,6 +50,7 @@ fileInput.addEventListener("change", (e) => {
 document.getElementById("sendBtn").addEventListener("click", () => {
   const task = document.getElementById("task").value.trim();
   const deadline = document.getElementById("deadline").value;
+  const promo = document.getElementById("promo").value.trim();
   
   if (!task) {
     if (tg.HapticFeedback) {
@@ -72,6 +73,7 @@ document.getElementById("sendBtn").addEventListener("click", () => {
     price: selectedPrice,
     task,
     deadline,
+    promo,
     files: attachedFiles // Передаем только имена файлов (для уведомления)
   };
 

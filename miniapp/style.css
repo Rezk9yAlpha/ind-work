@@ -98,8 +98,91 @@ h1 {
   transition: border-color 0.2s;
 }
 
-.input-group input[type="date"]:focus {
+.input-group input[type="date"]:focus,
+.input-group input[type="text"]:focus {
   border-color: var(--accent-color);
+}
+
+.input-group input[type="text"] {
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 12px;
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.promo-hint {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+/* Benefits & FAQ */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.benefit-item {
+  background: var(--bg-color);
+  padding: 12px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.benefit-item span {
+  font-size: 20px;
+}
+
+.benefit-item strong {
+  font-size: 11px;
+  color: var(--text-primary);
+}
+
+.faq-list details {
+  background: var(--bg-color);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.faq-list summary {
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-list summary::after {
+  content: '▼';
+  font-size: 10px;
+  color: var(--text-secondary);
+  transition: transform 0.2s;
+}
+
+.faq-list details[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.faq-list p {
+  padding: 0 12px 12px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
 .item {
