@@ -185,6 +185,43 @@ h1 {
   color: var(--text-secondary);
 }
 
+/* Reviews */
+.reviews-slider {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.review-card {
+  background: var(--bg-color);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.review-stars {
+  color: #fbbf24;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.review-card p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-primary);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.review-author {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-align: right;
+  font-weight: 600;
+}
+
 .item {
   width: 100%;
   display: flex;
