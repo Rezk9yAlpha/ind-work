@@ -58,8 +58,15 @@ function renderOrders() {
     }
     
     noOrders.style.display = 'none';
+    
+    // Получаем текущий ID пользователя
     const currentUserId = tg.initDataUnsafe?.user?.id;
-    const isAdmin = admins.includes(currentUserId);
+    // Проверка на админа: сравниваем значения как строки для надежности
+    const isAdmin = admins.some(id => String(id) === String(currentUserId));
+    
+    console.log("Current User ID:", currentUserId);
+    console.log("Admin list from URL:", admins);
+    console.log("Is Admin:", isAdmin);
 
     orders.sort((a, b) => new Date(b.time) - new Date(a.time));
 
