@@ -90,16 +90,15 @@ function renderOrders() {
             statusText = 'Отклонен';
         }
 
-        const priceHtml = order.final_price ? `<div class="order-price">${order.final_price} ₽</div>` : '';
         const deleteBtn = isAdmin ? `<button class="delete-btn" onclick="deleteOrder('${order.id}')">🗑️</button>` : '';
 
         card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
-                <div>
-                    <span class="order-id">#${order.id}</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span class="order-id">Заказ #${order.id}</span>
+                <div style="display: flex; align-items: center; gap: 8px;">
                     <span class="order-status ${statusClass}">${statusText}</span>
+                    ${deleteBtn}
                 </div>
-                ${deleteBtn}
             </div>
             <div class="order-info"><b>Тип:</b> ${order.data.type}</div>
             <div class="order-info"><b>Дедлайн:</b> ${order.data.deadline}</div>
