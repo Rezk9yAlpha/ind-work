@@ -85,6 +85,12 @@ function renderOrders() {
         if (order.status === 'accepted') {
             statusClass = 'status-accepted';
             statusText = 'Принят';
+        } else if (order.status === 'in_progress') {
+            statusClass = 'status-progress';
+            statusText = 'В работе';
+        } else if (order.status === 'completed') {
+            statusClass = 'status-ready';
+            statusText = 'Готов';
         } else if (order.status === 'rejected') {
             statusClass = 'status-rejected';
             statusText = 'Отклонен';
