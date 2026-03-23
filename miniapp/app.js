@@ -89,13 +89,7 @@ document.getElementById("sendBtn").addEventListener("click", () => {
     tg.HapticFeedback.notificationOccurred("success");
   }
 
-  // ТАК КАК ПРИЛОЖЕНИЕ ОТКРЫТО ЧЕРЕЗ INLINE-КНОПКУ, tg.sendData НЕ РАБОТАЕТ.
-  // ИСПОЛЬЗУЕМ СХЕМУ С ПЕРЕНАПРАВЛЕНИЕМ В БОТА С ПАРАМЕТРОМ.
-  const jsonData = JSON.stringify(payload);
-  const base64Data = btoa(unescape(encodeURIComponent(jsonData)));
-  
-  // Открываем бота с параметром старта
-  const botUsername = "Kursawork_bot"; // Тэг вашего бота
-  tg.openTelegramLink(`https://t.me/${botUsername}?start=${base64Data}`);
+  // С ТАКОЙ КЛАВИАТУРОЙ (REPLY) tg.sendData РАБОТАЕТ ИДЕАЛЬНО И БЕЗ ПОДТВЕРЖДЕНИЙ
+  tg.sendData(JSON.stringify(payload));
   tg.close();
 });
