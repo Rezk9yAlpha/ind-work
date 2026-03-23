@@ -81,7 +81,7 @@ function renderOrders() {
         card.className = 'card order-card';
         
         let statusClass = 'status-pending';
-        let statusText = 'В ожидании';
+        let statusText = 'Принят'; // По умолчанию для новых заказов
         if (order.status === 'accepted') {
             statusClass = 'status-accepted';
             statusText = 'Принят';
@@ -94,6 +94,9 @@ function renderOrders() {
         } else if (order.status === 'rejected') {
             statusClass = 'status-rejected';
             statusText = 'Отклонен';
+        } else if (order.status === 'pending') {
+            statusClass = 'status-pending';
+            statusText = 'Принят';
         }
 
         const deleteBtn = isAdmin ? `<button class="delete-btn" onclick="deleteOrder('${order.id}')">🗑️</button>` : '';
