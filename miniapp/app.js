@@ -112,11 +112,10 @@ function renderOrders() {
                     ${deleteBtn}
                 </div>
             </div>
-            <div class="order-info"><b>Тип:</b> ${order.data.type}</div>
-            <div class="order-info"><b>Дедлайн:</b> ${order.data.deadline}</div>
-            <div class="order-info"><b>Задача:</b> ${order.data.task}</div>
+            <div class="order-info"><b>Тип:</b> ${order.type || (order.data && order.data.type) || '—'}</div>
+            <div class="order-info"><b>Задача:</b> ${order.task || (order.data && order.data.task) || '—'}</div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-                <div class="order-time">${order.time}</div>
+                <div class="order-time">${order.time || '—'}</div>
                 ${priceHtml}
             </div>
         `;
