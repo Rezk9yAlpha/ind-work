@@ -62,13 +62,19 @@ function renderOrders() {
     // Получаем текущий ID пользователя
     const currentUserId = tg.initDataUnsafe?.user?.id;
     // Проверка на админа: сравниваем значения как строки для надежности
-    const isAdmin = admins.some(id => String(id) === String(currentUserId));
+    const isAdmin = admins.some(id => String(id).trim() === String(currentUserId).trim());
     
+    // Отладка для админа (выводится в консоль разработчика в ТГ)
+    console.log("=== DEBUG ADMIN ===");
     console.log("Current User ID:", currentUserId);
-    console.log("Admin list from URL:", admins);
-    console.log("Is Admin:", isAdmin);
+    console.log("Admins from URL:", admins);
+    console.log("Is Admin Match:", isAdmin);
+    console.log("====================");
 
-    orders.sort((a, b) => new Date(b.time) - new Date(a.time));
+    orders.sort((a, b) => {
+        // Сортировка по времени (новые сверху)
+        return b.id.localeCompare(a.id); // Простой способ если ID инкрементальные или по времени
+    });
 
     orders.forEach(order => {
         const card = document.createElement('div');
