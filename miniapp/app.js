@@ -81,7 +81,9 @@ function renderOrders() {
         card.className = 'card order-card';
         
         let statusClass = 'status-pending';
-        let statusText = 'Принят'; // По умолчанию для новых заказов
+        let statusText = 'Принят'; // Значение по умолчанию
+
+        // Маппинг статусов
         if (order.status === 'accepted') {
             statusClass = 'status-accepted';
             statusText = 'Принят';
@@ -100,6 +102,7 @@ function renderOrders() {
         }
 
         const deleteBtn = isAdmin ? `<button class="delete-btn" onclick="deleteOrder('${order.id}')">🗑️</button>` : '';
+        const priceHtml = order.final_price ? `<div class="order-price">${order.final_price} ₽</div>` : '';
 
         card.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
