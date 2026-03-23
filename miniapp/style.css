@@ -185,7 +185,71 @@ h1 {
   color: var(--text-secondary);
 }
 
-/* Reviews */
+/* My Orders Page */
+.order-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  margin-bottom: 15px;
+  padding: 15px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.order-id {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text-primary);
+}
+
+.order-status {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.status-pending {
+  background-color: #f59e0b; /* amber-500 */
+}
+
+.status-accepted {
+  background-color: #22c55e; /* green-500 */
+}
+
+.status-rejected {
+  background-color: #ef4444; /* red-500 */
+}
+
+.order-body p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.order-body p strong {
+  color: var(--text-primary);
+}
+
+.order-footer {
+  margin-top: 10px;
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+#back-to-main {
+  margin-top: 20px;
+}
+
+.item {/* Reviews */
 .reviews-slider {
   display: flex;
   flex-direction: column;
@@ -233,6 +297,9 @@ h1 {
   border-radius: 14px;
   padding: 16px;
   margin: 10px 0;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }

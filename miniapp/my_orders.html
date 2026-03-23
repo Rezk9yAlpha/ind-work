@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Мои заказы</title>
+    <link rel="stylesheet" href="./style.css?v=2.6" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body>
+    <main class="container">
+      <h1>📋 Мои заказы</h1>
+      <div id="orders-list"></div>
+      <div id="no-orders" style="display: none; text-align: center; padding: 40px 20px;">
+        <p style="font-size: 16px; color: var(--text-secondary);">У вас пока нет заказов.</p>
+        <button id="back-to-main" class="primary">Сделать первый заказ</button>
+      </div>
+    </main>
+    <script src="./my_orders.js?v=2.6"></script>
+  </body>
+</html>

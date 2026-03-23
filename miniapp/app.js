@@ -24,6 +24,14 @@ buttons.forEach((btn, index) => {
   });
 });
 
+document.getElementById('myOrdersBtn').addEventListener('click', () => {
+    // Передаем в URL параметр, чтобы бот понял, что мы хотим получить заказы
+    const webAppUrl = new URL(window.location.href);
+    webAppUrl.searchParams.set('get_orders', 'true');
+    // Перенаправляем на новую страницу
+    window.location.href = webAppUrl.toString().replace('index.html', 'my_orders.html');
+});
+
 // Работа с файлами
 const fileInput = document.getElementById("fileInput");
 const fileBtn = document.getElementById("fileBtn");
