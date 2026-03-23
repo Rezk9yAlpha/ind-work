@@ -25,11 +25,11 @@ buttons.forEach((btn, index) => {
 });
 
 document.getElementById('myOrdersBtn').addEventListener('click', () => {
-    // Передаем в URL параметр, чтобы бот понял, что мы хотим получить заказы
-    const webAppUrl = new URL(window.location.href);
-    webAppUrl.searchParams.set('get_orders', 'true');
-    // Перенаправляем на новую страницу
-    window.location.href = webAppUrl.toString().replace('index.html', 'my_orders.html');
+    // Навигация на страницу "Мои заказы"
+    const currentUrl = new URL(window.location.href);
+    const ordersUrl = new URL('my_orders.html', window.location.href);
+    ordersUrl.search = currentUrl.search; // Сохраняем все параметры (включая список заказов)
+    window.location.href = ordersUrl.toString();
 });
 
 // Работа с файлами
@@ -89,9 +89,13 @@ document.getElementById("sendBtn").addEventListener("click", () => {
     tg.HapticFeedback.notificationOccurred("success");
   }
 
-  // ВАЖНО: Telegram Mini App sendData может отправлять только строки. 
-  // Реальная загрузка файлов обычно идет через API, но здесь мы имитируем 
-  // уведомление админа о наличии файлов.
-  tg.sendData(JSON.stringify(payload));
+  // ТАК КАК ПРИЛОЖЕНИЕ ОТКРЫТО ЧЕРЕЗ INLINE-КНОПКУ, tg.sendData НЕ РАБОТАЕТ.
+  // ИСПОЛЬЗУЕМ СХЕМУ С ПЕРЕНАПРАВЛЕНИЕМ В БОТА С ПАРАМЕТРОМ.
+  const jsonData = JSON.stringify(payload);
+  const base64Data = btoa(unescape(encodeURIComponent(jsonData)));
+  
+  // Открываем бота с параметром старта
+  const botUsername = "Kursawork_bot"; // Тэг вашего бота
+  tg.openTelegramLink(`https://t.me/${botUsername}?start=${base64Data}`);
   tg.close();
 });
