@@ -4,155 +4,173 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>KursaWork Mini App</title>
-    <link rel="stylesheet" href="./style.css?v=3.0" />
+    <link rel="stylesheet" href="./style.css?v=4.1" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
     <main class="container">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <h1 style="margin: 0; text-align: left;">KursaWork 🔥</h1>
-        <button id="myOrdersBtn" style="background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 10px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
-          📋 Мои заказы
-        </button>
+      <!-- Главный экран -->
+      <div id="home-view">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h1 style="margin: 0; text-align: left;">KursaWork 🔥</h1>
+          <button id="showOrdersBtn" style="background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 10px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+            📋 Мои заказы
+          </button>
+        </div>
+        <p class="subtitle" style="text-align: left; margin-top: 0;">Сопровождение учебных работ и проектов 🎓</p>
+
+        <section class="card">
+          <h2>💎 Наши преимущества</h2>
+          <div class="benefits-grid">
+            <div class="benefit-item">
+              <span>🛡️</span>
+              <strong>100% уникальность</strong>
+            </div>
+            <div class="benefit-item">
+              <span>🛠️</span>
+              <strong>Бесплатные правки</strong>
+            </div>
+            <div class="benefit-item">
+              <span>🎓</span>
+              <strong>До защиты</strong>
+            </div>
+            <div class="benefit-item">
+              <span>⚡</span>
+              <strong>Сжатые сроки</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>💬 Отзывы клиентов</h2>
+          <div class="reviews-slider">
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Заказывал курсовую, сделали за 3 дня. Прошел проверку на плагиат с первого раза!"</p>
+              <span class="review-author">— Иван, МГТУ</span>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Спасибо за отчет по практике! Все правки внесли быстро и бесплатно."</p>
+              <span class="review-author">— Анна, РЭУ</span>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Лучший сервис! Сделали индивидуальный проект за выходные, очень выручили."</p>
+              <span class="review-author">— Максим, ВШЭ</span>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Реферат на отлично! Оформление по ГОСТу, даже придраться не к чему."</p>
+              <span class="review-author">— Дарья, МГУ</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>❓ Частые вопросы (FAQ)</h2>
+          <div class="faq-list">
+            <details>
+              <summary>А если преподаватель не примет?</summary>
+              <p>Мы бесплатно вносим все необходимые правки до тех пор, пока работа не будет успешно принята!</p>
+            </details>
+            <details>
+              <summary>Как быстро вы делаете?</summary>
+              <p>Сроки зависят от сложности, но мы всегда стараемся уложиться в ваш дедлайн. В среднем от 2-х дней.</p>
+            </details>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>💳 Как происходит оплата?</h2>
+          <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+              <span>1️⃣</span>
+              <span><b>Предоплата 50%:</b> Вы вносите половину стоимости после обсуждения деталей.</span>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+              <span>2️⃣</span>
+              <span><b>Контроль:</b> Мы делаем часть работы и присылаем вам скриншоты/видео.</span>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 10px;">
+              <span>3️⃣</span>
+              <span><b>Финал:</b> Оплачиваете остаток и получаете полностью готовую работу!</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>📂 Категории и цены</h2>
+          <button class="item" data-type="Курсовой проект" data-price="от 3 500 ₽">
+            <span>📝 Курсовой проект</span>
+            <strong>от 3 500 ₽</strong>
+          </button>
+          <button class="item" data-type="Отчет по практике" data-price="от 2 500 ₽">
+            <span>📈 Отчет по практике</span>
+            <strong>от 2 500 ₽</strong>
+          </button>
+          <button class="item" data-type="Индивидуальный проект" data-price="от 2 000 ₽">
+            <span>💎 Индивидуальный проект</span>
+            <strong>от 2 000 ₽</strong>
+          </button>
+          <button class="item" data-type="Реферат" data-price="от 1 000 ₽">
+            <span>📄 Реферат</span>
+            <strong>от 1 000 ₽</strong>
+          </button>
+          
+          <div class="urgent-box">
+            <p>🚀 <b>Срочный заказ?</b> Сделаем в 2 раза быстрее!</p>
+            <p style="font-size: 12px; margin-top: 4px; opacity: 0.8;">Доплата всего +30% к стоимости</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>✍️ Оформить заказ</h2>
+          <textarea id="task" placeholder="Тема работы, объем, пожелания..."></textarea>
+          
+          <div class="input-group">
+            <label for="deadline">📅 Срок сдачи (дедлайн):</label>
+            <input type="date" id="deadline" />
+          </div>
+
+          <div class="input-group">
+            <label for="promo">🎁 Бонусы и скидки:</label>
+            <input type="text" id="promo" placeholder="Промокод (если есть)" />
+            <p class="promo-hint">✨ Скидка 10% на ПЕРВЫЙ заказ (автоматически)</p>
+            <p class="promo-hint">📢 Расскажите друзьям о боте и получите скидку 15% на следующий заказ!</p>
+          </div>
+
+          <div class="file-upload">
+            <input type="file" id="fileInput" multiple hidden />
+            <button id="fileBtn" class="secondary">📎 Прикрепить файлы</button>
+            <div id="fileList" class="file-list"></div>
+            <p style="font-size: 11px; color: var(--accent-color); margin-top: 10px; font-weight: 500; line-height: 1.4;">
+              ⚠️ <b>ВНИМАНИЕ:</b> После отправки заявки обязательно перешлите файлы менеджерам: <br>
+              👉 <a href="https://t.me/R0llxon" style="color: #38bdf8; text-decoration: underline;">@R0llxon</a> <br>
+              👉 <a href="https://t.me/filarmontg" style="color: #38bdf8; text-decoration: underline;">@filarmontg</a>
+            </p>
+          </div>
+
+          <button id="sendBtn" class="primary">Отправить заявку 🚀</button>
+        </section>
       </div>
-      <p class="subtitle" style="text-align: left; margin-top: 0;">Сопровождение учебных работ и проектов 🎓</p>
 
-      <section class="card">
-        <h2>💎 Наши преимущества</h2>
-        <div class="benefits-grid">
-          <div class="benefit-item">
-            <span>🛡️</span>
-            <strong>100% уникальность</strong>
-          </div>
-          <div class="benefit-item">
-            <span>🛠️</span>
-            <strong>Бесплатные правки</strong>
-          </div>
-          <div class="benefit-item">
-            <span>🎓</span>
-            <strong>До защиты</strong>
-          </div>
-          <div class="benefit-item">
-            <span>⚡</span>
-            <strong>Сжатые сроки</strong>
-          </div>
+      <!-- Экран заказов -->
+      <div id="orders-view" style="display: none;">
+        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+          <button id="backBtn" style="background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px;">
+            ←
+          </button>
+          <h1 style="margin: 0; font-size: 24px;">📋 Мои заказы</h1>
         </div>
-      </section>
-
-      <section class="card">
-        <h2>💬 Отзывы клиентов</h2>
-        <div class="reviews-slider">
-          <div class="review-card">
-            <div class="review-stars">⭐⭐⭐⭐⭐</div>
-            <p>"Заказывал курсовую, сделали за 3 дня. Прошел проверку на плагиат с первого раза!"</p>
-            <span class="review-author">— Иван, МГТУ</span>
-          </div>
-          <div class="review-card">
-            <div class="review-stars">⭐⭐⭐⭐⭐</div>
-            <p>"Спасибо за отчет по практике! Все правки внесли быстро и бесплатно."</p>
-            <span class="review-author">— Анна, РЭУ</span>
-          </div>
-          <div class="review-card">
-            <div class="review-stars">⭐⭐⭐⭐⭐</div>
-            <p>"Лучший сервис! Сделали индивидуальный проект за выходные, очень выручили."</p>
-            <span class="review-author">— Максим, ВШЭ</span>
-          </div>
-          <div class="review-card">
-            <div class="review-stars">⭐⭐⭐⭐⭐</div>
-            <p>"Реферат на отлично! Оформление по ГОСТу, даже придраться не к чему."</p>
-            <span class="review-author">— Дарья, МГУ</span>
-          </div>
+        <div id="orders-list"></div>
+        <div id="no-orders-msg" style="display: none; text-align: center; padding: 40px 20px;">
+          <p style="font-size: 16px; color: var(--text-secondary);">У вас пока нет заказов.</p>
+          <button id="to-home-btn" class="primary">Сделать первый заказ</button>
         </div>
-      </section>
-
-      <section class="card">
-        <h2>❓ Частые вопросы (FAQ)</h2>
-        <div class="faq-list">
-          <details>
-            <summary>А если преподаватель не примет?</summary>
-            <p>Мы бесплатно вносим все необходимые правки до тех пор, пока работа не будет успешно принята!</p>
-          </details>
-          <details>
-            <summary>Как быстро вы делаете?</summary>
-            <p>Сроки зависят от сложности, но мы всегда стараемся уложиться в ваш дедлайн. В среднем от 2-х дней.</p>
-          </details>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>💳 Как происходит оплата?</h2>
-        <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
-          <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
-            <span>1️⃣</span>
-            <span><b>Предоплата 50%:</b> Вы вносите половину стоимости после обсуждения деталей.</span>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
-            <span>2️⃣</span>
-            <span><b>Контроль:</b> Мы делаем часть работы и присылаем вам скриншоты/видео.</span>
-          </div>
-          <div style="display: flex; align-items: flex-start; gap: 10px;">
-            <span>3️⃣</span>
-            <span><b>Финал:</b> Оплачиваете остаток и получаете полностью готовую работу!</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>📂 Категории и цены</h2>
-        <button class="item" data-type="Курсовой проект" data-price="от 3 500 ₽">
-          <span>📝 Курсовой проект</span>
-          <strong>от 3 500 ₽</strong>
-        </button>
-        <button class="item" data-type="Отчет по практике" data-price="от 2 500 ₽">
-          <span>📈 Отчет по практике</span>
-          <strong>от 2 500 ₽</strong>
-        </button>
-        <button class="item" data-type="Индивидуальный проект" data-price="от 2 000 ₽">
-          <span>💎 Индивидуальный проект</span>
-          <strong>от 2 000 ₽</strong>
-        </button>
-        <button class="item" data-type="Реферат" data-price="от 1 000 ₽">
-          <span>📄 Реферат</span>
-          <strong>от 1 000 ₽</strong>
-        </button>
-        
-        <div class="urgent-box">
-          <p>🚀 <b>Срочный заказ?</b> Сделаем в 2 раза быстрее!</p>
-          <p style="font-size: 12px; margin-top: 4px; opacity: 0.8;">Доплата всего +30% к стоимости</p>
-        </div>
-      </section>
-
-      <section class="card">
-        <h2>✍️ Оформить заказ</h2>
-        <textarea id="task" placeholder="Тема работы, объем, пожелания..."></textarea>
-        
-        <div class="input-group">
-          <label for="deadline">📅 Срок сдачи (дедлайн):</label>
-          <input type="date" id="deadline" />
-        </div>
-
-        <div class="input-group">
-          <label for="promo">🎁 Бонусы и скидки:</label>
-          <input type="text" id="promo" placeholder="Промокод (если есть)" />
-          <p class="promo-hint">✨ Скидка 10% на ПЕРВЫЙ заказ (автоматически)</p>
-          <p class="promo-hint">📢 Расскажите друзьям о боте и получите скидку 15% на следующий заказ!</p>
-        </div>
-
-        <div class="file-upload">
-          <input type="file" id="fileInput" multiple hidden />
-          <button id="fileBtn" class="secondary">📎 Прикрепить файлы</button>
-          <div id="fileList" class="file-list"></div>
-          <p style="font-size: 11px; color: var(--accent-color); margin-top: 10px; font-weight: 500; line-height: 1.4;">
-            ⚠️ <b>ВНИМАНИЕ:</b> После отправки заявки обязательно перешлите файлы менеджерам: <br>
-            👉 <a href="https://t.me/R0llxon" style="color: #38bdf8; text-decoration: underline;">@R0llxon</a> <br>
-            👉 <a href="https://t.me/filarmontg" style="color: #38bdf8; text-decoration: underline;">@filarmontg</a>
-          </p>
-        </div>
-
-        <button id="sendBtn" class="primary">Отправить заявку 🚀</button>
-      </section>
+      </div>
     </main>
 
-    <script src="./app.js?v=3.0"></script>
+    <script src="./app.js?v=4.1"></script>
   </body>
 </html>
