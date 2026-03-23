@@ -64,6 +64,22 @@ function renderOrders() {
     // Проверка на админа: сравниваем значения как строки для надежности
     const isAdmin = admins.some(id => String(id).trim() === String(currentUserId).trim());
     
+    // Показываем кнопку очистки для админов
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    if (clearAllBtn) {
+        clearAllBtn.style.display = isAdmin ? 'block' : 'none';
+        clearAllBtn.onclick = () => {
+            tg.showConfirm("Вы уверены, что хотите ПОЛНОСТЬЮ очистить все заказы? (Данные будут сохранены в архив)", (ok) => {
+                if (ok) {
+                    const data = { action: "clear_all_orders" };
+                    const encoded = btoa(JSON.stringify(data));
+                    tg.openTelegramLink(`https://t.me/${tg.initDataUnsafe.receiver?.username || 'KursaWork_bot'}?start=${encoded}`);
+                    tg.close();
+                }
+            });
+        };
+    }
+    
     // Отладка для админа (выводится в консоль разработчика в ТГ)
     console.log("=== DEBUG ADMIN ===");
     console.log("Current User ID:", currentUserId);
@@ -91,8 +107,6 @@ function renderOrders() {
         else if (s === 'rejected') { statusClass = 'status-rejected'; statusText = 'Отклонен'; }
         else { statusClass = 'status-pending'; statusText = 'Принят'; }
 
-        // Кнопка удаления ТОЛЬКО для админов
-        const deleteBtn = isAdmin ? `<button class="delete-btn" onclick="deleteOrder('${order.id}')" style="margin-left: 8px;">🗑️</button>` : '';
         const priceHtml = order.final_price ? `<div class="order-price">${order.final_price} ₽</div>` : '';
 
         card.innerHTML = `
@@ -100,7 +114,6 @@ function renderOrders() {
                 <span class="order-id">Заказ #${order.id}</span>
                 <div style="display: flex; align-items: center;">
                     <span class="order-status ${statusClass}">${statusText}</span>
-                    ${deleteBtn}
                 </div>
             </div>
             <div class="order-info"><b>Тип:</b> ${order.type || '—'}</div>
