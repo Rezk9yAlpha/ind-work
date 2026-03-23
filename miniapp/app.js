@@ -84,36 +84,27 @@ function renderOrders() {
         let statusText = 'Принят'; // Значение по умолчанию
 
         // Маппинг статусов
-        if (order.status === 'accepted') {
-            statusClass = 'status-accepted';
-            statusText = 'Принят';
-        } else if (order.status === 'in_progress') {
-            statusClass = 'status-progress';
-            statusText = 'В работе';
-        } else if (order.status === 'completed') {
-            statusClass = 'status-ready';
-            statusText = 'Готов';
-        } else if (order.status === 'rejected') {
-            statusClass = 'status-rejected';
-            statusText = 'Отклонен';
-        } else if (order.status === 'pending') {
-            statusClass = 'status-pending';
-            statusText = 'Принят';
-        }
+        const s = order.status;
+        if (s === 'accepted') { statusClass = 'status-accepted'; statusText = 'Принят'; }
+        else if (s === 'in_progress') { statusClass = 'status-progress'; statusText = 'В работе'; }
+        else if (s === 'completed') { statusClass = 'status-ready'; statusText = 'Готов'; }
+        else if (s === 'rejected') { statusClass = 'status-rejected'; statusText = 'Отклонен'; }
+        else { statusClass = 'status-pending'; statusText = 'Принят'; }
 
-        const deleteBtn = isAdmin ? `<button class="delete-btn" onclick="deleteOrder('${order.id}')">🗑️</button>` : '';
+        // Кнопка удаления ТОЛЬКО для админов
+        const deleteBtn = isAdmin ? `<button class="delete-btn" onclick="deleteOrder('${order.id}')" style="margin-left: 8px;">🗑️</button>` : '';
         const priceHtml = order.final_price ? `<div class="order-price">${order.final_price} ₽</div>` : '';
 
         card.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <span class="order-id">Заказ #${order.id}</span>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center;">
                     <span class="order-status ${statusClass}">${statusText}</span>
                     ${deleteBtn}
                 </div>
             </div>
-            <div class="order-info"><b>Тип:</b> ${order.type || (order.data && order.data.type) || '—'}</div>
-            <div class="order-info"><b>Задача:</b> ${order.task || (order.data && order.data.task) || '—'}</div>
+            <div class="order-info"><b>Тип:</b> ${order.type || '—'}</div>
+            <div class="order-info"><b>Задача:</b> ${order.task || '—'}</div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
                 <div class="order-time">${order.time || '—'}</div>
                 ${priceHtml}
