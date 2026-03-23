@@ -6,11 +6,21 @@ tg.setHeaderColor("secondary_bg_color");
 tg.setBackgroundColor("bg_color");
 
 const urlParams = new URLSearchParams(window.location.search);
-const adminIds = [7314654912, 580964653]; // ID админов для возможности удаления
 
 // Функция для получения данных о заказах
 function fetchOrders() {
     const ordersData = urlParams.get('orders');
+    const adminsData = urlParams.get('admins');
+    
+    let adminIds = [];
+    if (adminsData) {
+        try {
+            adminIds = JSON.parse(decodeURIComponent(adminsData));
+        } catch (e) {
+            console.error("Error parsing admins data:", e);
+        }
+    }
+
     // Получаем текущего пользователя для проверки прав на удаление
     const user = tg.initDataUnsafe.user;
     const is_admin = user && adminIds.includes(user.id);
@@ -111,11 +121,19 @@ function showNoOrders() {
 }
 
 document.getElementById('back-to-main').addEventListener('click', () => {
-    window.location.href = `./index.html${window.location.search}`; 
+    // Возвращаемся на главную, сохраняя параметры
+    const currentUrl = new URL(window.location.href);
+    const mainUrl = new URL('index.html', window.location.href);
+    mainUrl.search = currentUrl.search;
+    window.location.href = mainUrl.toString();
 });
 
 document.getElementById('back-btn-header').addEventListener('click', () => {
-    window.location.href = `./index.html${window.location.search}`;
+    // Возвращаемся на главную, сохраняя параметры
+    const currentUrl = new URL(window.location.href);
+    const mainUrl = new URL('index.html', window.location.href);
+    mainUrl.search = currentUrl.search;
+    window.location.href = mainUrl.toString();
 });
 
 // Запускаем получение заказов при загрузке страницы
