@@ -18,10 +18,10 @@
 body {
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #ff0080 0%, #7928ca 25%, #0070f3 50%, #fbd38d 75%, #ff0080 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 25%, #312e81 50%, #1e1b4b 75%, #0f172a 100%);
   background-attachment: fixed;
   background-size: 400% 400%;
-  animation: gradientBG 15s ease infinite;
+  animation: gradientBG 20s ease infinite;
   color: var(--text-primary);
   font-family: var(--font-family);
   line-height: 1.5;
@@ -66,14 +66,45 @@ h1 {
 }
 
 .card {
-  background: rgba(30, 41, 59, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 41, 59, 0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+#clearAllBtn {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 14px;
+  font-weight: 700;
+  font-size: 15px;
+  width: 100%;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+#clearAllBtn:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+}
+
+#clearAllBtn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
 }
 
 .card h2 {
