@@ -18,17 +18,17 @@
 body {
   margin: 0;
   padding: 0;
-  /* Более светлая, но насыщенная пастельная палитра */
+  /* МАКСИМАЛЬНО ЯРКАЯ И СОЧНАЯ ПАЛИТРА, как было до этого */
   background: linear-gradient(135deg, 
-    #a78bfa 0%, 
-    #f472b6 25%, 
-    #60a5fa 50%, 
-    #fbbf24 75%, 
-    #a78bfa 100%
+    #ff0080 0%, 
+    #7928ca 25%, 
+    #0070f3 50%, 
+    #fbd38d 75%, 
+    #ff0080 100%
   );
   background-attachment: fixed;
   background-size: 400% 400%;
-  animation: gradientBG 18s ease infinite;
+  animation: gradientBG 12s ease infinite;
   color: var(--text-primary);
   font-family: var(--font-family);
   line-height: 1.5;
@@ -51,20 +51,22 @@ body {
 h1 {
   margin: 0;
   font-size: 32px;
-  font-weight: 800;
-  /* Белый текст с тенью для читаемости на любом фоне */
+  font-weight: 900;
+  /* Белый текст с четкой тенью */
   color: #ffffff;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
   text-align: center;
+  letter-spacing: -0.5px;
 }
 
 .subtitle {
   margin: 8px 0 24px;
   color: #ffffff;
-  font-weight: 500;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
   text-align: center;
   font-size: 15px;
+  opacity: 0.95;
 }
 
 @keyframes gradientBG {
@@ -74,36 +76,36 @@ h1 {
 }
 
 .card {
-  /* Темная полупрозрачная подложка для идеального контраста на светлом фоне */
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  /* Тонкая и прозрачная подложка, чтобы переливы фона были максимально видны */
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 24px;
   padding: 20px;
   margin-bottom: 20px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 #clearAllBtn {
-  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 14px 24px;
   border-radius: 16px;
   font-weight: 800;
   font-size: 15px;
   width: 100%;
   margin-bottom: 24px;
-  box-shadow: 0 8px 25px rgba(244, 63, 94, 0.4);
+  box-shadow: 0 8px 20px rgba(255, 75, 43, 0.4);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 
 #clearAllBtn:active {
