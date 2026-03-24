@@ -64,12 +64,12 @@ function renderOrders() {
     // Проверка на админа: сравниваем значения как строки для надежности
     const isAdmin = admins.some(id => String(id).trim() === String(currentUserId).trim());
     
-    // Показываем кнопку очистки для админов
+    // Показываем кнопку очистки для всех пользователей (она скрывает только их заказы)
     const clearAllBtn = document.getElementById('clearAllBtn');
     if (clearAllBtn) {
-        clearAllBtn.style.display = isAdmin ? 'block' : 'none';
+        clearAllBtn.style.display = 'block';
         clearAllBtn.onclick = () => {
-            tg.showConfirm("Вы уверены, что хотите ПОЛНОСТЬЮ очистить все заказы? (Данные будут сохранены в архив)", (ok) => {
+            tg.showConfirm("Вы уверены, что хотите очистить ваш список заказов?", (ok) => {
                 if (ok) {
                     const data = { action: "clear_all_orders" };
                     const encoded = btoa(JSON.stringify(data));
