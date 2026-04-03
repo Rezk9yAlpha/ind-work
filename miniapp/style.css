@@ -179,9 +179,10 @@ h1 {
 }
 
 .promo-hint {
-  font-size: 11px;
-  color: var(--text-secondary);
-  margin: 4px 0 0;
+  font-size: 13px;
+  color: #fbbf24;
+  font-weight: 600;
+  margin: 6px 0 0;
   line-height: 1.4;
 }
 
