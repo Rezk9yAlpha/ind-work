@@ -87,10 +87,7 @@ function renderOrders() {
     console.log("Is Admin Match:", isAdmin);
     console.log("====================");
 
-    orders.sort((a, b) => {
-        // Сортировка по времени (новые сверху)
-        return b.id.localeCompare(a.id); // Простой способ если ID инкрементальные или по времени
-    });
+
 
     orders.forEach(order => {
         const card = document.createElement('div');
