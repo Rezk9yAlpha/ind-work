@@ -199,7 +199,7 @@ document.getElementById("sendBtn").addEventListener("click", async () => {
   if(window.kwStaticMiniApp){
     const data=JSON.stringify(payload);
     if(new TextEncoder().encode(data).length>4096){tg.showAlert('Сократите описание заявки. Подробное ТЗ можно отправить администратору после принятия заказа.');return;}
-    try{tg.sendData(data);tg.close();}catch(_){tg.showAlert('Отправьте боту /start и откройте Mini App новой кнопкой внизу чата.');}
+    try{const send=()=>{tg.sendData(data);tg.close();};if(fileInput.files.length)tg.showAlert('GitHub передаёт только заявку. Сами файлы отправьте администратору в Telegram после принятия заказа.',send);else send();}catch(_){tg.showAlert('Отправьте боту /start и откройте Mini App новой кнопкой внизу чата.');}
     return;
   }
   if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("success");
@@ -224,7 +224,7 @@ function checkAcceptedOrders(){
   openManager(order);break;
  }
 }
-function showAdminEntry(){if(!kwAccount?.is_admin||document.getElementById('miniAdminBtn'))return;const bar=document.getElementById('kwAccountBar');if(!bar)return;const button=kwElement(bar,'button','Панель заказов','nav-btn');button.id='miniAdminBtn';button.onclick=()=>location.href='/admin';}
+function showAdminEntry(){if(!kwAccount?.is_admin||document.getElementById('miniAdminBtn'))return;const bar=document.querySelector('#home-view > div');if(!bar)return;const button=kwElement(bar,'button','Админ-панель',document.getElementById('showOrdersBtn').className);button.id='miniAdminBtn';button.onclick=()=>location.href='/admin';}
 window.addEventListener('kw-account-rendered',showAdminEntry);
 kwReady.then(showAdminEntry).catch(()=>{});
 setInterval(()=>{if(!document.hidden)loadServerOrders();},4000);
@@ -281,4 +281,4 @@ function initSpotlightEffect() {
 initSpotlightEffect();
 
 
-if(window.kwStaticMiniApp){fileInput.disabled=true;const note=document.createElement('p');note.textContent='Файлы можно прикрепить на локальном сайте или передать администратору в Telegram после принятия заявки.';fileInput.parentElement.append(note);}
+

@@ -1,0 +1,22 @@
+.mini-original-0{display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;}
+.mini-original-1{margin: 0; text-align: left;}
+.mini-original-2{background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 10px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;}
+.mini-original-3{text-align: left; margin-top: 0;}
+.mini-original-4{font-size: 13px; color: var(--text-secondary); line-height: 1.6;}
+.mini-original-5{display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;}
+.mini-original-6{display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;}
+.mini-original-7{display: flex; align-items: flex-start; gap: 10px;}
+.mini-original-8{font-size: 12px; margin-top: 4px; opacity: 0.8;}
+.mini-original-9{font-size: 11px; color: var(--accent-color); margin-top: 10px; font-weight: 500; line-height: 1.5;}
+.mini-original-10{color: #38bdf8; text-decoration: underline;}
+.mini-original-11{color: #38bdf8; text-decoration: underline;}
+.mini-original-12{color: #38bdf8; text-decoration: underline;}
+.mini-original-13{color: #38bdf8; text-decoration: underline;}
+.mini-original-14{display: none;}
+.mini-original-15{display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;}
+.mini-original-16{display: flex; align-items: center; gap: 15px;}
+.mini-original-17{background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px;}
+.mini-original-18{margin: 0; font-size: 24px;}
+.mini-original-19{display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444; padding: 8px 12px; border-radius: 10px; font-size: 12px; cursor: pointer; font-weight: 600;}
+.mini-original-20{display: none; text-align: center; padding: 40px 20px;}
+.mini-original-21{font-size: 16px; color: var(--text-secondary);}

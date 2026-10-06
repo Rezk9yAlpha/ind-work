@@ -6,9 +6,9 @@ async function boot(){
   window.kwAccount={is_admin:false,authenticated:false};window.kwReady=Promise.resolve(window.kwAccount);
   window.kwEscape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   window.kwElement=(parent,tag,text,className)=>{const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;parent.append(node);return node;};
-  const bar=document.getElementById('kwAccountBar');if(bar)bar.textContent='Заявка отправляется нашему боту. Статусы и связь с администратором — в чате Telegram.';
+
  }else{await load('/static/security.js');await load('/static/auth.js');}
- await load('./app.js?v=5');
+ await load('./app.js?v=6');
 }
 boot().catch(()=>{const box=document.getElementById('kwAccountBar');if(box)box.textContent='Не удалось загрузить приложение. Закройте его, отправьте боту /start и попробуйте снова.';});
 })();
