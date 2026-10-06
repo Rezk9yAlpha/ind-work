@@ -585,4 +585,4 @@ textarea:focus {
 /* Accepted badge matches the original My Orders screen. */
 .status-accepted{background:rgba(148,163,184,.1);color:#94a3b8}
 
-.mini-order-status-wrap{display:flex;align-items:center;gap:8px}.mini-order-delete{background:transparent;border:0;color:inherit;padding:4px;cursor:pointer;font-size:16px}.mini-order-delete:hover{background:rgba(239,68,68,.15);border-radius:6px}
+.mini-clear-history{width:100%;border:1px solid rgba(255,255,255,.25);border-radius:14px;background:linear-gradient(90deg,#ff4737,#ff3577);color:white;font-weight:700;font-size:16px;padding:15px;cursor:pointer;margin:0 0 20px;box-shadow:0 6px 20px rgba(255,53,119,.2)}.mini-clear-history:disabled{opacity:.6;cursor:wait}

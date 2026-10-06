@@ -33,7 +33,7 @@ let serverOrders=[], ordersLoaded=false, ordersError="";
 function getUrlParams(){return {orders:serverOrders,admins:[]};}
 async function loadServerOrders(){
  if(window.kwStaticMiniApp){serverOrders=window.kwStaticOrders||[];ordersLoaded=['ready','stale'].includes(window.kwSnapshotStatus);ordersError=ordersLoaded?'':'Отправьте боту /start и откройте новую кнопку Mini App, чтобы загрузить свои заказы.';renderOrders();return;}
- try{const data=await kwApi('/api/orders/mine');if(!Array.isArray(data.orders))throw new Error('Не удалось загрузить заказы');serverOrders=data.orders.map(order=>({...order,manager_tg:order.manager?.tg_url,manager_vk:order.manager?.vk_url}));ordersLoaded=true;ordersError='';renderOrders();checkAcceptedOrders();}
+ try{const data=await kwApi('/api/telegram/orders/mine');if(!Array.isArray(data.orders))throw new Error('Не удалось загрузить заказы');serverOrders=data.orders.map(order=>({...order,manager_tg:order.manager?.tg_url,manager_vk:order.manager?.vk_url}));ordersLoaded=true;ordersError='';renderOrders();checkAcceptedOrders();}
  catch(error){ordersError=error.message;renderOrders();}
 }
 
@@ -43,6 +43,7 @@ function renderOrders() {
     const noOrders = document.getElementById('no-orders-msg');
     
     list.innerHTML = '';
+    document.getElementById('clearHistoryBtn').hidden=!ordersLoaded||!orders.length;
     toHomeBtn.hidden=!ordersLoaded||!!ordersError;
     const message=noOrders.querySelector('p');
     message.textContent=ordersError||(ordersLoaded?'У вас пока нет заказов.':'Загружаем ваши заказы…');
@@ -96,16 +97,17 @@ function renderOrders() {
                 ${priceHtml}
             </div>
         `;
-        list.appendChild(card);if(rawOrder.status==='completed'){const trash=kwElement(card.querySelector('.mini-order-status-wrap'),'button','🗑️','mini-order-delete');trash.setAttribute('aria-label','Удалить готовый заказ #'+rawOrder.id);trash.onclick=()=>deleteOrder(rawOrder.id);}
+        list.appendChild(card);
         if(rawOrder.manager_tg){const button=kwElement(card,'button','Написать администратору '+rawOrder.manager_name,'item');button.onclick=()=>openManager(rawOrder);}
     });
 }
 
-window.deleteOrder = function(orderId) {
- tg.showConfirm('Удалить готовый заказ #'+orderId+' вместе с его файлами и перепиской? Это действие нельзя отменить.',async ok=>{
+document.getElementById('clearHistoryBtn').onclick=()=>{
+ tg.showConfirm('Очистить историю заказов у себя в Telegram? Не переживайте: вся история ваших заказов, файлы и переписка сохранятся у администраторов. На сайте заказы останутся доступны.',async ok=>{
   if(!ok)return;
-  if(window.kwStaticMiniApp){tg.sendData(JSON.stringify({action:'delete_completed_order',order_id:orderId}));tg.close();return;}
-  try{await kwPost('/api/orders/'+encodeURIComponent(orderId)+'/delete',{});await loadServerOrders();}catch(error){tg.showAlert(error.message);}
+  if(window.kwStaticMiniApp){tg.sendData(JSON.stringify({action:'clear_telegram_history'}));tg.close();return;}
+  const button=document.getElementById('clearHistoryBtn');button.disabled=true;
+  try{await kwPost('/api/telegram/orders/clear-history',{});await loadServerOrders();tg.showAlert('История очищена только у вас в Telegram. Все данные сохранены у администраторов.');}catch(error){tg.showAlert(error.message);}finally{button.disabled=false;}
  });
 };
 

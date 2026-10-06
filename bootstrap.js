@@ -21,7 +21,7 @@ async function boot(){
   window.kwElement=(parent,tag,text,className)=>{const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;parent.append(node);return node;};
 
  }else{await load('/static/security.js');await load('/static/auth.js');}
- await load('./app.js?v=8');
+ await load('./app.js?v=9');
 }
 boot().catch(()=>{const box=document.getElementById('kwAccountBar');if(box)box.textContent='Не удалось загрузить приложение. Закройте его, отправьте боту /start и попробуйте снова.';});
 })();
