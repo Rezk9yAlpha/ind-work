@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>KursaWork Mini App</title>
+    <link rel="stylesheet" href="./style.css?v=4.1" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="./preserved.css"><link rel="stylesheet" href="./account.css">
+    <script defer src="./bootstrap.js?v=5"></script></head>
+  <body><div id="kwAccountBar" class="kw-account-bar"></div>
+    <main class="container">
+      <!-- Главный экран -->
+      <div id="home-view">
+        <div class="kw-preserved-129">
+          <h1 class="kw-preserved-130">KursaWork 🔥</h1>
+          <button id="showOrdersBtn" class="kw-preserved-131">
+            📋 Мои заказы
+          </button>
+        </div>
+        <p class="kw-preserved-132 subtitle">Сопровождение учебных работ и проектов 🎓</p>
+
+        <section class="card">
+          <h2>💎 Наши преимущества</h2>
+          <div class="benefits-grid">
+            <div class="benefit-item">
+              <span>🛡️</span>
+              <strong>100% уникальность</strong>
+            </div>
+            <div class="benefit-item">
+              <span>🛠️</span>
+              <strong>Бесплатные правки</strong>
+            </div>
+            <div class="benefit-item">
+              <span>🎓</span>
+              <strong>До защиты</strong>
+            </div>
+            <div class="benefit-item">
+              <span>⚡</span>
+              <strong>Сжатые сроки</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>💬 Отзывы клиентов</h2>
+          <div class="reviews-slider">
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Заказывал курсовую, сделали за 3 дня. Прошел проверку на плагиат с первого раза!"</p>
+              <span class="review-author">— Иван, МГТУ</span>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Спасибо за отчет по практике! Все правки внесли быстро и бесплатно."</p>
+              <span class="review-author">— Анна, РЭУ</span>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Лучший сервис! Сделали индивидуальный проект за выходные, очень выручили."</p>
+              <span class="review-author">— Максим, ВШЭ</span>
+            </div>
+            <div class="review-card">
+              <div class="review-stars">⭐⭐⭐⭐⭐</div>
+              <p>"Реферат на отлично! Оформление по ГОСТу, даже придраться не к чему."</p>
+              <span class="review-author">— Дарья, МГУ</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>❓ Частые вопросы (FAQ)</h2>
+          <div class="faq-list">
+            <details>
+              <summary>А если преподаватель не примет?</summary>
+              <p>Мы бесплатно вносим все необходимые правки до тех пор, пока работа не будет успешно принята!</p>
+            </details>
+            <details>
+              <summary>Как быстро вы делаете?</summary>
+              <p>Сроки зависят от сложности, но мы всегда стараемся уложиться в ваш дедлайн. В среднем от 2-х дней.</p>
+            </details>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>💳 Как происходит оплата?</h2>
+          <div class="kw-preserved-133">
+            <div class="kw-preserved-134">
+              <span>1️⃣</span>
+              <span><b>Предоплата 50%:</b> Вы вносите половину стоимости после обсуждения деталей.</span>
+            </div>
+            <div class="kw-preserved-135">
+              <span>2️⃣</span>
+              <span><b>Контроль:</b> Мы делаем часть работы и присылаем вам скриншоты/видео.</span>
+            </div>
+            <div class="kw-preserved-136">
+              <span>3️⃣</span>
+              <span><b>Финал:</b> Оплачиваете остаток и получаете полностью готовую работу!</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>📂 Категории и цены</h2>
+          <button class="item" data-type="Курсовой проект" data-price="от 2 800 ₽">
+            <span>📝 Курсовой проект</span>
+            <strong>от 2 800 ₽</strong>
+          </button>
+          <button class="item" data-type="Отчет по практике" data-price="от 2 500 ₽">
+            <span>📈 Отчет по практике</span>
+            <strong>от 2 500 ₽</strong>
+          </button>
+          <button class="item" data-type="Индивидуальный проект" data-price="от 1 500 ₽">
+            <span>💎 Индивидуальный проект</span>
+            <strong>от 1 500 ₽</strong>
+          </button>
+          <button class="item" data-type="Реферат" data-price="от 1 000 ₽">
+            <span>📄 Реферат</span>
+            <strong>от 1 000 ₽</strong>
+          </button>
+          <button class="item" data-type="Презентация" data-price="от 600 ₽">
+            <span>📊 Презентация</span>
+            <strong>от 600 ₽</strong>
+          </button>
+          <button class="item" data-type="Сообщение по теме" data-price="от 300 ₽">
+            <span>💬 Сообщение по теме</span>
+            <strong>от 300 ₽</strong>
+          </button>
+          
+          <div class="urgent-box">
+            <p>🚀 <b>Срочный заказ?</b> Сделаем в 2 раза быстрее!</p>
+            <p class="kw-preserved-137">Доплата всего +30% к стоимости</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>✍️ Оформить заказ</h2>
+          <textarea id="task" placeholder="Тема работы, объем, пожелания..."></textarea>
+          
+          <div class="input-group">
+            <label for="deadline">📅 Срок сдачи (дедлайн):</label>
+            <input type="date" id="deadline" />
+          </div>
+
+          <div class="input-group">
+            <label for="promo">🎁 Бонусы и скидки:</label>
+            <input type="text" id="promo" placeholder="Промокод (если есть)" />
+            <p class="promo-hint">✨ Скидка 10% на ПЕРВЫЙ заказ (автоматически)</p>
+            <p class="promo-hint">📢 Расскажите друзьям о боте и получите скидку 15% на следующий заказ!</p>
+          </div>
+
+          <div class="file-upload">
+            <input type="file" id="fileInput" multiple hidden />
+            <button id="fileBtn" class="secondary">📎 Прикрепить файлы</button>
+            <div id="fileList" class="file-list"></div>
+            <p class="kw-preserved-138">
+              ⚠️ <b>ВНИМАНИЕ:</b> После отправки заявки обязательно перешлите файлы менеджерам: <br>
+              👉 <b>Влад:</b> <a href="https://t.me/R0llxon" class="kw-preserved-139">Telegram</a> | <a href="https://vk.ru/marsyanen" class="kw-preserved-140">ВКонтакте</a><br>
+              👉 <b>Наиль:</b> <a href="https://t.me/is_cosmo" class="kw-preserved-141">Telegram</a> | <a href="https://vk.ru/slarnyak" class="kw-preserved-142">ВКонтакте</a>
+            </p>
+          </div>
+
+          <button id="sendBtn" class="primary">Отправить заявку 🚀</button>
+        </section>
+      </div>
+
+      <!-- Экран заказов -->
+      <div id="orders-view" class="kw-preserved-143">
+        <div class="kw-preserved-144">
+          <div class="kw-preserved-145">
+            <button id="backBtn" class="kw-preserved-146">
+              ←
+            </button>
+            <h1 class="kw-preserved-147">📋 Мои заказы</h1>
+          </div>
+          <button id="clearAllBtn" class="kw-preserved-148">
+            🗑️ Очистить всё
+          </button>
+        </div>
+        <div id="orders-list"></div>
+        <div id="no-orders-msg" class="kw-preserved-149">
+          <p class="kw-preserved-150">У вас пока нет заказов.</p>
+          <button id="to-home-btn" class="primary">Сделать первый заказ</button>
+        </div>
+      </div>
+    </main>
+
+
+  </body>
+</html>
