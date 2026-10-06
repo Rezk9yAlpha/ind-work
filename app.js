@@ -17,15 +17,11 @@ const backBtn = document.getElementById('backBtn');
 const toHomeBtn = document.getElementById('to-home-btn');
 
 function switchView(view) {
-    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred("light");
-    if (view === 'orders') {
-        homeView.style.display = 'none';
-        ordersView.style.display = 'block';
-        renderOrders();
-    } else {
-        homeView.style.display = 'block';
-        ordersView.style.display = 'none';
-    }
+ if(tg.HapticFeedback)tg.HapticFeedback.impactOccurred('light');
+ const target=view==='orders'?ordersView:homeView,other=view==='orders'?homeView:ordersView;
+ other.hidden=true;other.style.display='none';target.hidden=false;target.style.display='block';
+ target.classList.remove('mini-screen-enter');void target.offsetWidth;target.classList.add('mini-screen-enter');
+ window.scrollTo({top:0,behavior:'instant'});if(view==='orders')renderOrders();
 }
 
 showOrdersBtn.addEventListener('click', () => switchView('orders'));
@@ -36,7 +32,7 @@ toHomeBtn.addEventListener('click', () => switchView('home'));
 let serverOrders=[];
 function getUrlParams(){return {orders:serverOrders,admins:[]};}
 async function loadServerOrders(){
- if(window.kwStaticMiniApp){serverOrders=[];renderOrders();const text=document.querySelector('#no-orders-msg p');if(text)text.textContent='Ваши заказы доступны в чате бота: нажмите «Мои заказы» или отправьте /orders.';return;}
+ if(window.kwStaticMiniApp){serverOrders=window.kwStaticOrders||[];renderOrders();const text=document.querySelector('#no-orders-msg p');if(text&&!serverOrders.length)text.textContent=window.kwSnapshotStatus==='ready'?'У вас пока нет заказов.':'Отправьте боту /start и откройте новую персональную кнопку Mini App, чтобы увидеть свои заказы.';return;}
  try{const data=await kwApi('/api/orders/mine');serverOrders=data.orders.map(order=>({...order,manager_tg:order.manager?.tg_url,manager_vk:order.manager?.vk_url}));renderOrders();checkAcceptedOrders();}
  catch(error){const box=document.getElementById('no-orders-msg');box.style.display='block';const text=box.querySelector('p');if(text)text.textContent=error.message;}
 }
@@ -55,36 +51,6 @@ function renderOrders() {
     
     noOrders.style.display = 'none';
     
-    // Получаем текущий ID пользователя (в Telegram WebApp) или тестовый ID из URL (для проверки в браузере)
-    const currentUserId = tg.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('test_user_id');
-    // Проверка на админа: сравниваем значения как строки для надежности
-    const isAdmin = admins.some(id => String(id).trim() === String(currentUserId).trim());
-    
-    // Показываем кнопку очистки ТОЛЬКО для админов
-    const clearAllBtn = document.getElementById('clearAllBtn');
-    if (clearAllBtn) {
-        clearAllBtn.style.display = isAdmin ? 'block' : 'none';
-        clearAllBtn.onclick = () => {
-            tg.showConfirm("Вы уверены, что хотите очистить ВАШ список заказов?", (ok) => {
-                if (ok) {
-                    const data = { action: "clear_all_orders" };
-                    const encoded = btoa(JSON.stringify(data));
-                    tg.openTelegramLink(`https://t.me/${tg.initDataUnsafe.receiver?.username || 'KursaWork_bot'}?start=${encoded}`);
-                    tg.close();
-                }
-            });
-        };
-    }
-    
-    // Отладка для админа (выводится в консоль разработчика в ТГ)
-    console.log("=== DEBUG ADMIN ===");
-    console.log("Current User ID:", currentUserId);
-    console.log("Admins from URL:", admins);
-    console.log("Is Admin Match:", isAdmin);
-    console.log("====================");
-
-
-
     orders.forEach(rawOrder => {
         const order={...rawOrder};for(const field of ['id','type','task','time','manager_name'])order[field]=kwEscape(order[field]);
         const card = document.createElement('div');
@@ -95,9 +61,9 @@ function renderOrders() {
 
         // Маппинг статусов
         const s = order.status;
-        if (s === 'accepted') { statusClass = 'status-accepted'; statusText = 'Заказ принят администратором '+(order.manager_name||''); }
+        if (s === 'accepted') { statusClass = 'status-accepted'; statusText = 'Принят'; }
         else if (s === 'in_progress') { statusClass = 'status-progress'; statusText = 'В работе 🛠️'; }
-        else if (s === 'completed') { statusClass = 'status-ready'; statusText = 'Готов 🎉'; }
+        else if (s === 'completed') { statusClass = 'status-ready'; statusText = 'Готов'; }
         else if (s === 'rejected') { statusClass = 'status-rejected'; statusText = 'Отказано ❌'; }
         else { statusClass = 'status-pending'; statusText = 'Ожидает рассмотрения'; }
 
@@ -113,21 +79,21 @@ function renderOrders() {
         ` : '';
 
         card.innerHTML = `
-            <div class="kw-preserved-156">
+            <div class="mini-order-heading">
                 <span class="order-id">Заказ #${order.id}</span>
-                <div class="kw-preserved-157">
+                <div class="mini-order-status-wrap">
                     <span class="order-status ${statusClass}">${statusText}</span>
                 </div>
             </div>
             <div class="order-info"><b>Тип:</b> ${order.type || '—'}</div>
-            <div class="order-info"><b>Задача:</b> ${order.task || '—'}</div>
+            <div class="order-info"><b>Задача:</b> ${order.task?.length>100?order.task.slice(0,100)+'…':order.task || '—'}</div>
             ${managerHtml}
-            <div class="kw-preserved-158">
+            <div class="mini-order-bottom">
                 <div class="order-time">${order.time || '—'}</div>
                 ${priceHtml}
             </div>
         `;
-        list.appendChild(card);kwFinancial(card,rawOrder);kwFiles(card,rawOrder,loadServerOrders);if(rawOrder.manager_tg){const button=kwElement(card,'button','Написать администратору '+rawOrder.manager_name,'item');button.onclick=()=>openManager(rawOrder);}
+        list.appendChild(card);if(rawOrder.manager_tg){const button=kwElement(card,'button','Написать администратору '+rawOrder.manager_name,'item');button.onclick=()=>openManager(rawOrder);}
     });
 }
 
