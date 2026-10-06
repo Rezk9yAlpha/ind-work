@@ -5,19 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>KursaWork Mini App</title>
     <link rel="stylesheet" href="./style.css?v=4.1" />
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  </head>
-  <body>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script><script src="/static/security.js"></script><link rel="stylesheet" href="/static/preserved.css"><link rel="stylesheet" href="/static/account.css"><script defer src="/static/auth.js"></script></head>
+  <body><div id="kwAccountBar" class="kw-account-bar"></div>
     <main class="container">
       <!-- Главный экран -->
       <div id="home-view">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h1 style="margin: 0; text-align: left;">KursaWork 🔥</h1>
-          <button id="showOrdersBtn" style="background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 12px; border-radius: 10px; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+        <div class="kw-preserved-129">
+          <h1 class="kw-preserved-130">KursaWork 🔥</h1>
+          <button id="showOrdersBtn" class="kw-preserved-131">
             📋 Мои заказы
           </button>
         </div>
-        <p class="subtitle" style="text-align: left; margin-top: 0;">Сопровождение учебных работ и проектов 🎓</p>
+        <p class="kw-preserved-132 subtitle">Сопровождение учебных работ и проектов 🎓</p>
 
         <section class="card">
           <h2>💎 Наши преимущества</h2>
@@ -83,16 +82,16 @@
 
         <section class="card">
           <h2>💳 Как происходит оплата?</h2>
-          <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
-            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+          <div class="kw-preserved-133">
+            <div class="kw-preserved-134">
               <span>1️⃣</span>
               <span><b>Предоплата 50%:</b> Вы вносите половину стоимости после обсуждения деталей.</span>
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px;">
+            <div class="kw-preserved-135">
               <span>2️⃣</span>
               <span><b>Контроль:</b> Мы делаем часть работы и присылаем вам скриншоты/видео.</span>
             </div>
-            <div style="display: flex; align-items: flex-start; gap: 10px;">
+            <div class="kw-preserved-136">
               <span>3️⃣</span>
               <span><b>Финал:</b> Оплачиваете остаток и получаете полностью готовую работу!</span>
             </div>
@@ -128,7 +127,7 @@
           
           <div class="urgent-box">
             <p>🚀 <b>Срочный заказ?</b> Сделаем в 2 раза быстрее!</p>
-            <p style="font-size: 12px; margin-top: 4px; opacity: 0.8;">Доплата всего +30% к стоимости</p>
+            <p class="kw-preserved-137">Доплата всего +30% к стоимости</p>
           </div>
         </section>
 
@@ -152,10 +151,10 @@
             <input type="file" id="fileInput" multiple hidden />
             <button id="fileBtn" class="secondary">📎 Прикрепить файлы</button>
             <div id="fileList" class="file-list"></div>
-            <p style="font-size: 11px; color: var(--accent-color); margin-top: 10px; font-weight: 500; line-height: 1.4;">
+            <p class="kw-preserved-138">
               ⚠️ <b>ВНИМАНИЕ:</b> После отправки заявки обязательно перешлите файлы менеджерам: <br>
-              👉 <a href="https://t.me/R0llxon" style="color: #38bdf8; text-decoration: underline;">@R0llxon</a> <br>
-              👉 <a href="https://t.me/is_cosmo" style="color: #38bdf8; text-decoration: underline;">@is_cosmo</a>
+              👉 <b>Влад:</b> <a href="https://t.me/R0llxon" class="kw-preserved-139">Telegram</a> | <a href="https://vk.ru/marsyanen" class="kw-preserved-140">ВКонтакте</a><br>
+              👉 <b>Наиль:</b> <a href="https://t.me/is_cosmo" class="kw-preserved-141">Telegram</a> | <a href="https://vk.ru/slarnyak" class="kw-preserved-142">ВКонтакте</a>
             </p>
           </div>
 
@@ -164,21 +163,21 @@
       </div>
 
       <!-- Экран заказов -->
-      <div id="orders-view" style="display: none;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
-          <div style="display: flex; align-items: center; gap: 15px;">
-            <button id="backBtn" style="background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-primary); width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 18px;">
+      <div id="orders-view" class="kw-preserved-143">
+        <div class="kw-preserved-144">
+          <div class="kw-preserved-145">
+            <button id="backBtn" class="kw-preserved-146">
               ←
             </button>
-            <h1 style="margin: 0; font-size: 24px;">📋 Мои заказы</h1>
+            <h1 class="kw-preserved-147">📋 Мои заказы</h1>
           </div>
-          <button id="clearAllBtn" style="display: none; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); color: #ef4444; padding: 8px 12px; border-radius: 10px; font-size: 12px; cursor: pointer; font-weight: 600;">
+          <button id="clearAllBtn" class="kw-preserved-148">
             🗑️ Очистить всё
           </button>
         </div>
         <div id="orders-list"></div>
-        <div id="no-orders-msg" style="display: none; text-align: center; padding: 40px 20px;">
-          <p style="font-size: 16px; color: var(--text-secondary);">У вас пока нет заказов.</p>
+        <div id="no-orders-msg" class="kw-preserved-149">
+          <p class="kw-preserved-150">У вас пока нет заказов.</p>
           <button id="to-home-btn" class="primary">Сделать первый заказ</button>
         </div>
       </div>

@@ -6,7 +6,7 @@ tg.setHeaderColor("secondary_bg_color");
 tg.setBackgroundColor("bg_color");
 
 let selectedType = "Курсовой проект";
-let selectedPrice = "от 3 500 ₽";
+let selectedPrice = "от 2 800 ₽";
 let attachedFiles = [];
 
 // --- SPA Навигация ---
@@ -33,16 +33,11 @@ backBtn.addEventListener('click', () => switchView('home'));
 toHomeBtn.addEventListener('click', () => switchView('home'));
 
 // --- Работа с данными из URL ---
-function getUrlParams() {
-    const params = new URLSearchParams(window.location.search);
-    try {
-        const orders = JSON.parse(params.get('orders') || '[]');
-        const admins = JSON.parse(params.get('admins') || '[]');
-        return { orders, admins };
-    } catch (e) {
-        console.error("Ошибка парсинга параметров:", e);
-        return { orders: [], admins: [] };
-    }
+let serverOrders=[];
+function getUrlParams(){return {orders:serverOrders,admins:[]};}
+async function loadServerOrders(){
+ try{const data=await kwApi('/api/orders/mine');serverOrders=data.orders.map(order=>({...order,manager_tg:order.manager?.tg_url,manager_vk:order.manager?.vk_url}));renderOrders();checkAcceptedOrders();}
+ catch(error){const box=document.getElementById('no-orders-msg');box.style.display='block';const text=box.querySelector('p');if(text)text.textContent=error.message;}
 }
 
 function renderOrders() {
@@ -59,8 +54,8 @@ function renderOrders() {
     
     noOrders.style.display = 'none';
     
-    // Получаем текущий ID пользователя
-    const currentUserId = tg.initDataUnsafe?.user?.id;
+    // Получаем текущий ID пользователя (в Telegram WebApp) или тестовый ID из URL (для проверки в браузере)
+    const currentUserId = tg.initDataUnsafe?.user?.id || new URLSearchParams(window.location.search).get('test_user_id');
     // Проверка на админа: сравниваем значения как строки для надежности
     const isAdmin = admins.some(id => String(id).trim() === String(currentUserId).trim());
     
@@ -89,38 +84,49 @@ function renderOrders() {
 
 
 
-    orders.forEach(order => {
+    orders.forEach(rawOrder => {
+        const order={...rawOrder};for(const field of ['id','type','task','time','manager_name'])order[field]=kwEscape(order[field]);
         const card = document.createElement('div');
         card.className = 'card order-card';
         
         let statusClass = 'status-pending';
-        let statusText = 'Принят'; // Значение по умолчанию
+        let statusText = 'Ожидает рассмотрения'; // Значение по умолчанию
 
         // Маппинг статусов
         const s = order.status;
-        if (s === 'accepted') { statusClass = 'status-accepted'; statusText = 'Принят'; }
-        else if (s === 'in_progress') { statusClass = 'status-progress'; statusText = 'В работе'; }
-        else if (s === 'completed') { statusClass = 'status-ready'; statusText = 'Готов'; }
-        else if (s === 'rejected') { statusClass = 'status-rejected'; statusText = 'Отклонен'; }
-        else { statusClass = 'status-pending'; statusText = 'Принят'; }
+        if (s === 'accepted') { statusClass = 'status-accepted'; statusText = 'Заказ принят администратором '+(order.manager_name||''); }
+        else if (s === 'in_progress') { statusClass = 'status-progress'; statusText = 'В работе 🛠️'; }
+        else if (s === 'completed') { statusClass = 'status-ready'; statusText = 'Готов 🎉'; }
+        else if (s === 'rejected') { statusClass = 'status-rejected'; statusText = 'Отказано ❌'; }
+        else { statusClass = 'status-pending'; statusText = 'Ожидает рассмотрения'; }
 
         const priceHtml = order.final_price ? `<div class="order-price">${order.final_price} ₽</div>` : '';
+        const managerHtml = order.manager_name ? `
+            <div class="kw-preserved-151">
+                <div class="kw-preserved-152">👤 Ваш менеджер: ${order.manager_name}</div>
+                <div class="kw-preserved-153">
+                    ${order.manager_tg ? `<a href="${order.manager_tg}" target="_blank" class="kw-preserved-154">💬 Telegram</a>` : ''}
+                    ${order.manager_vk ? `<a href="${order.manager_vk}" target="_blank" class="kw-preserved-155">🌐 ВКонтакте</a>` : ''}
+                </div>
+            </div>
+        ` : '';
 
         card.innerHTML = `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="kw-preserved-156">
                 <span class="order-id">Заказ #${order.id}</span>
-                <div style="display: flex; align-items: center;">
+                <div class="kw-preserved-157">
                     <span class="order-status ${statusClass}">${statusText}</span>
                 </div>
             </div>
             <div class="order-info"><b>Тип:</b> ${order.type || '—'}</div>
             <div class="order-info"><b>Задача:</b> ${order.task || '—'}</div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+            ${managerHtml}
+            <div class="kw-preserved-158">
                 <div class="order-time">${order.time || '—'}</div>
                 ${priceHtml}
             </div>
         `;
-        list.appendChild(card);
+        list.appendChild(card);kwFinancial(card,rawOrder);kwFiles(card,rawOrder,loadServerOrders);if(rawOrder.manager_tg){const button=kwElement(card,'button','Написать администратору '+rawOrder.manager_name,'item');button.onclick=()=>openManager(rawOrder);}
     });
 }
 
@@ -169,7 +175,7 @@ fileInput.addEventListener("change", (e) => {
 });
 
 // --- Отправка ---
-document.getElementById("sendBtn").addEventListener("click", () => {
+document.getElementById("sendBtn").addEventListener("click", async () => {
   const task = document.getElementById("task").value.trim();
   const deadline = document.getElementById("deadline").value;
   const promo = document.getElementById("promo").value.trim();
@@ -180,18 +186,90 @@ document.getElementById("sendBtn").addEventListener("click", () => {
   }
 
   const payload = {
+    source: 'miniapp',
     type: selectedType,
     price: selectedPrice,
     task,
     deadline,
     promo,
-    files: attachedFiles
+    contact: tg.initDataUnsafe?.user?.username ? "@"+tg.initDataUnsafe.user.username : String(tg.initDataUnsafe?.user?.id||"Telegram")
   };
 
   if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred("success");
-  tg.sendData(JSON.stringify(payload));
-  tg.close();
+  const button=document.getElementById('sendBtn');button.disabled=true;
+  try{const result=await kwPost('/api/orders/create',payload);kwSaveAccess(result.order_id,result.access_token);const errors=await kwUploadFiles(result.order_id,fileInput.files);tg.showAlert('Заявка #'+result.order_id+' сохранена. Скидка: '+result.discount_percent+'%.'+(errors.length?' Часть документов не загрузилась: '+errors.join('; '):''));await loadServerOrders();switchView('orders');}
+  catch(error){tg.showAlert(error.message);}
+  finally{button.disabled=false;}
 });
 
+function openManager(order){
+ const url=order.manager_tg;
+ if(!url||!/^https:\/\/t\.me\/[A-Za-z0-9_]+$/.test(url))return;
+ try{tg.openTelegramLink(url);tg.close();}catch(error){tg.showAlert('Не удалось открыть чат. Нажмите «Написать администратору» ещё раз.');}
+}
+function checkAcceptedOrders(){
+ for(const order of serverOrders){
+  if(order.source!=='miniapp'||!['accepted','in_progress'].includes(order.status)||!order.accepted_at||!order.manager_tg||!order.manager_id)continue;
+  const key='kw-mini-accepted:'+order.id,value=order.accepted_at+':'+order.manager_id;
+  let previous;try{previous=sessionStorage.getItem(key);}catch{}
+  if(previous===value)continue;
+  try{sessionStorage.setItem(key,value);}catch{}
+  openManager(order);break;
+ }
+}
+function showAdminEntry(){if(!kwAccount?.is_admin||document.getElementById('miniAdminBtn'))return;const bar=document.getElementById('kwAccountBar');if(!bar)return;const button=kwElement(bar,'button','Панель заказов','nav-btn');button.id='miniAdminBtn';button.onclick=()=>location.href='/admin';}
+window.addEventListener('kw-account-rendered',showAdminEntry);
+kwReady.then(showAdminEntry).catch(()=>{});
+setInterval(()=>{if(!document.hidden)loadServerOrders();},4000);
+
 // Инициализация
-renderOrders();
+loadServerOrders();
+
+// --- Эффект Деликатного 3D Наклона (Subtle Tilt) + Radial Spotlight ---
+// Наклон ограничен до минимальных приятных 2.5 градусов, а при наборе текста или клике в поле ввода мгновенно выравнивается!
+function initSpotlightEffect() {
+  const cards = document.querySelectorAll(".card");
+  const MAX_TILT_DEG = 2.5; // Минимальный деликатный угол (не мешает читать и попадать по кнопкам)
+
+  window.addEventListener("pointermove", (e) => {
+    cards.forEach((card) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // Обновляем координаты для неонового луча по контуру
+      card.style.setProperty("--mouse-x", `${x}px`);
+      card.style.setProperty("--mouse-y", `${y}px`);
+
+      // Если курсор над карточкой и внутри нет активного ввода текста
+      const isInside = x >= 0 && x <= rect.width && y >= 0 && y <= rect.height;
+      const hasActiveInput = card.contains(document.activeElement) && 
+        (document.activeElement.tagName === "INPUT" || document.activeElement.tagName === "TEXTAREA");
+
+      if (isInside && !hasActiveInput) {
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        // Очень плавный расчет наклона
+        const tiltX = -((y - centerY) / centerY) * MAX_TILT_DEG;
+        const tiltY = ((x - centerX) / centerX) * MAX_TILT_DEG;
+
+        card.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+        card.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
+      } else {
+        card.style.setProperty("--tilt-x", `0deg`);
+        card.style.setProperty("--tilt-y", `0deg`);
+      }
+    });
+  }, { passive: true });
+
+  // При уходе курсора с экрана плавно возвращаем карточки в ровное положение
+  document.addEventListener("mouseleave", () => {
+    cards.forEach((card) => {
+      card.style.setProperty("--tilt-x", `0deg`);
+      card.style.setProperty("--tilt-y", `0deg`);
+    });
+  });
+}
+
+initSpotlightEffect();
+
