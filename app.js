@@ -29,12 +29,12 @@ backBtn.addEventListener('click', () => switchView('home'));
 toHomeBtn.addEventListener('click', () => switchView('home'));
 
 // --- Работа с данными из URL ---
-let serverOrders=[];
+let serverOrders=[], ordersLoaded=false, ordersError="";
 function getUrlParams(){return {orders:serverOrders,admins:[]};}
 async function loadServerOrders(){
- if(window.kwStaticMiniApp){serverOrders=window.kwStaticOrders||[];renderOrders();const text=document.querySelector('#no-orders-msg p');if(text&&!serverOrders.length)text.textContent=window.kwSnapshotStatus==='ready'?'У вас пока нет заказов.':'Отправьте боту /start и откройте новую персональную кнопку Mini App, чтобы увидеть свои заказы.';return;}
- try{const data=await kwApi('/api/orders/mine');serverOrders=data.orders.map(order=>({...order,manager_tg:order.manager?.tg_url,manager_vk:order.manager?.vk_url}));renderOrders();checkAcceptedOrders();}
- catch(error){const box=document.getElementById('no-orders-msg');box.style.display='block';const text=box.querySelector('p');if(text)text.textContent=error.message;}
+ if(window.kwStaticMiniApp){serverOrders=window.kwStaticOrders||[];ordersLoaded=['ready','stale'].includes(window.kwSnapshotStatus);ordersError=ordersLoaded?'':'Отправьте боту /start и откройте новую кнопку Mini App, чтобы загрузить свои заказы.';renderOrders();return;}
+ try{const data=await kwApi('/api/orders/mine');if(!Array.isArray(data.orders))throw new Error('Не удалось загрузить заказы');serverOrders=data.orders.map(order=>({...order,manager_tg:order.manager?.tg_url,manager_vk:order.manager?.vk_url}));ordersLoaded=true;ordersError='';renderOrders();checkAcceptedOrders();}
+ catch(error){ordersError=error.message;renderOrders();}
 }
 
 function renderOrders() {
@@ -43,6 +43,9 @@ function renderOrders() {
     const noOrders = document.getElementById('no-orders-msg');
     
     list.innerHTML = '';
+    toHomeBtn.hidden=!ordersLoaded||!!ordersError;
+    const message=noOrders.querySelector('p');
+    message.textContent=ordersError||(ordersLoaded?'У вас пока нет заказов.':'Загружаем ваши заказы…');
     
     if (orders.length === 0) {
         noOrders.style.display = 'block';
@@ -93,21 +96,17 @@ function renderOrders() {
                 ${priceHtml}
             </div>
         `;
-        list.appendChild(card);if(rawOrder.manager_tg){const button=kwElement(card,'button','Написать администратору '+rawOrder.manager_name,'item');button.onclick=()=>openManager(rawOrder);}
+        list.appendChild(card);if(rawOrder.status==='completed'){const trash=kwElement(card.querySelector('.mini-order-status-wrap'),'button','🗑️','mini-order-delete');trash.setAttribute('aria-label','Удалить готовый заказ #'+rawOrder.id);trash.onclick=()=>deleteOrder(rawOrder.id);}
+        if(rawOrder.manager_tg){const button=kwElement(card,'button','Написать администратору '+rawOrder.manager_name,'item');button.onclick=()=>openManager(rawOrder);}
     });
 }
 
-// Глобальная функция для удаления (через start payload)
 window.deleteOrder = function(orderId) {
-    tg.showConfirm(`Вы уверены, что хотите удалить заказ #${orderId}?`, (ok) => {
-        if (ok) {
-            const data = { action: "delete_order", order_id: orderId };
-            const encoded = btoa(JSON.stringify(data));
-            // Открываем бота с параметром для удаления
-            tg.openTelegramLink(`https://t.me/${tg.initDataUnsafe.receiver?.username || 'KursaWork_bot'}?start=${encoded}`);
-            tg.close();
-        }
-    });
+ tg.showConfirm('Удалить готовый заказ #'+orderId+' вместе с его файлами и перепиской? Это действие нельзя отменить.',async ok=>{
+  if(!ok)return;
+  if(window.kwStaticMiniApp){tg.sendData(JSON.stringify({action:'delete_completed_order',order_id:orderId}));tg.close();return;}
+  try{await kwPost('/api/orders/'+encodeURIComponent(orderId)+'/delete',{});await loadServerOrders();}catch(error){tg.showAlert(error.message);}
+ });
 };
 
 // --- Выбор типа услуги ---

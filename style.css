@@ -584,3 +584,5 @@ textarea:focus {
 
 /* Accepted badge matches the original My Orders screen. */
 .status-accepted{background:rgba(148,163,184,.1);color:#94a3b8}
+
+.mini-order-status-wrap{display:flex;align-items:center;gap:8px}.mini-order-delete{background:transparent;border:0;color:inherit;padding:4px;cursor:pointer;font-size:16px}.mini-order-delete:hover{background:rgba(239,68,68,.15);border-radius:6px}

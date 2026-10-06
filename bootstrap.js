@@ -11,18 +11,17 @@ async function boot(){
     const raw=encoded.replace(/-/g,'+').replace(/_/g,'/');const bytes=Uint8Array.from(atob(raw+'='.repeat((4-raw.length%4)%4)),c=>c.charCodeAt(0));
     const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate'));const text=await new Response(stream).text();
     const snapshot=JSON.parse(text);const uid=window.Telegram?.WebApp?.initDataUnsafe?.user?.id;
-    if(snapshot.expires_at<Date.now()/1000)window.kwSnapshotStatus='expired';
-    else if(uid&&String(uid)!==String(snapshot.user_id))window.kwSnapshotStatus='wrong-user';
-    else if(Array.isArray(snapshot.orders)){window.kwStaticOrders=snapshot.orders;window.kwSnapshotStatus='ready';}
+    if(uid&&String(uid)!==String(snapshot.user_id))window.kwSnapshotStatus='wrong-user';
+    else if(Array.isArray(snapshot.orders)){window.kwStaticOrders=snapshot.orders;window.kwSnapshotStatus=snapshot.expires_at<Date.now()/1000?'stale':'ready';}
    }catch(_){window.kwSnapshotStatus='invalid';}
-   history.replaceState(null,'',location.pathname+location.search);
+   // Keep the private fragment so Telegram reloads retain this recipient snapshot.
   }
 
   window.kwEscape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   window.kwElement=(parent,tag,text,className)=>{const node=document.createElement(tag);if(text!==undefined)node.textContent=text;if(className)node.className=className;parent.append(node);return node;};
 
  }else{await load('/static/security.js');await load('/static/auth.js');}
- await load('./app.js?v=7');
+ await load('./app.js?v=8');
 }
 boot().catch(()=>{const box=document.getElementById('kwAccountBar');if(box)box.textContent='Не удалось загрузить приложение. Закройте его, отправьте боту /start и попробуйте снова.';});
 })();
